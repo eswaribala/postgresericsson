@@ -12,7 +12,10 @@ Product,Location,Stock, Product type
 Create Type ProductType As Enum('Electronics','Garments','Furniture', 'Kitchen Appliances');
 
 
-Create table Product(Product_Id bigserial,
+Create table Product(Product_Id bigserial Primary Key, Product_Name varchar(150) Not Null, 
+Buffer_level smallint constraint buffer_level_constr Check(Buffer_level>0), Product_Type ProductType);
+
+Create table Location(Regional_Code smallint primary key , Address text not null, Contact_Number bigint);
 
 
 
