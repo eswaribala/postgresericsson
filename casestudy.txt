@@ -123,6 +123,11 @@ INSERT INTO StarRating (Rating) VALUES(
 </Ratings>'
 );
 
+select age( Planned_Delivery_Date,Requested_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
+
+select age( Planned_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
+
+SELECT date_part('hour', Transaction_Date_Time) from ProductTransaction where Transaction_Id=1;
 
 
 
