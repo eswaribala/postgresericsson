@@ -35,6 +35,9 @@ create table StockStatusHistory(History_Id bigserial primary key,  Product_Id bi
 
 create table DeliverySchedule(Schedule_Id bigserial primary key, Product_Id bigint, Requested_Delivery_Date date, Planned_Delivery_Date date, Available_Qty bigint);
 
+
+\c accountdb
+
 create table ProductTransaction(Transaction_Id bigserial primary key,
 
 Transaction_Date_Time timestamptz, Amount bigint, Mode varchar(50), 
