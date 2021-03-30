@@ -130,5 +130,10 @@ select age( Planned_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
 SELECT date_part('hour', Transaction_Date_Time) from ProductTransaction where Transaction_Id=1;
 
 
+SELECT Customer_info  -> 'email',Customer_info -> 'address' AS Email
+FROM Customer
+WHERE Customer_Id=1;
+
+update Customer set Customer_info=replace(Customer_Info::TEXT,':"Sincere@april.biz"',':"Param@gmail.com"')::jsonb
 
 
