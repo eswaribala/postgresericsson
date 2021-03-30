@@ -15,8 +15,13 @@ Create Type ProductType As Enum('Electronics','Garments','Furniture', 'Kitchen A
 Create table Product(Product_Id bigserial Primary Key, Product_Name varchar(150) Not Null, 
 Buffer_level smallint constraint buffer_level_constr Check(Buffer_level>0), Product_Type ProductType);
 
+insert into Product(Product_Name,Buffer_level,Product_Type) values('Laptop',100,'Electronics');
+
+
+
 Create table Location(Regional_Code smallint primary key , Address text not null, Contact_Number bigint);
 
+insert into location (Regional_Code,Address,Contact_Number) values (44,'Mylapore, Chennai-5',1234567890);
 
 to list the tables
 \dt
@@ -24,29 +29,49 @@ to list the tables
 to list the realtions for specific table
 \dt+ location
 
-to desribe the table
+to describe the table
 
 \d product
 
 create sequence invoice_no_seq AS bigint;
+
 Create table Stock(Invoice_No bigint NOT NULL DEFAULT nextval('invoice_no_seq') primary key, DOP date, Qty smallint, Cost bigint, Product_Id bigint references product(Product_Id), Regional_Code smallint references location(Regional_code));
 
-create table StockStatusHistory(History_Id bigserial primary key,  Product_Id bigint, Qty bigint, Stock_SnapShot timestamptz);
+insert into Stock (DOP,Qty,Cost,Product_Id,Regional_Code) values('2021-02-22',65,45000,1,44);
+
+
+Switch to Shipping db
+\c shippingdb
+tables
+stockstatushistory,deliveryschedule
+
+create table StockStatusHistory(History_Id bigserial primary key, Product_Id bigint,
+Qty bigint, Stock_SnapShot timestamptz);  
+
+insert into StockStatusHistory (Product_Id, Stock_SnapShot) values (1,
+now());
 
 
 create table DeliverySchedule(Schedule_Id bigserial primary key, Product_Id bigint, Requested_Delivery_Date date, Planned_Delivery_Date date, Available_Qty bigint);
 
+insert into DeliverySchedule (Product_Id,Requested_Delivery_Date,Planned_Delivery_Date, Available_Qty) values(1,'2021-04-10','2021-04-12',100);
 
-\c accountdb
+
+\accountdb
+tables
+transaction,purchaseorder
 
 create table ProductTransaction(Transaction_Id bigserial primary key,
 
 Transaction_Date_Time timestamptz, Amount bigint, Mode varchar(50), 
 
 Status Boolean);
-SET TIMEZONE = 'Asia/Calcutta';
+
 
 insert into ProductTransaction (Transaction_Date_Time,Amount,Mode,Status) values (now(),10000,'Cash',true);
+
+
+
 
 create table Customer(Customer_Id bigserial primary key, Customer_info jsonb not null);
 
@@ -74,8 +99,14 @@ insert into Customer (Customer_info) values ('{
     }
   }');
 
+
+
+
+
 create table GlobalCountryInfo(CountryCode smallint primary key,
 Country_State text [] []);
+
+
 
 insert into GlobalCountryInfo (CountryCode,Country_State) values(91,'{{"India","TamilNadu"},{"India","Karnataka"}}');
 
@@ -91,6 +122,7 @@ INSERT INTO StarRating (Rating) VALUES(
 <Excellent>5</Excellent>
 </Ratings>'
 );
+
 
 
 
