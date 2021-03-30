@@ -53,6 +53,15 @@ Country_State text [] []);
 
 create table StarRating(Rating xml);
 
+INSERT INTO StarRating (Rating) VALUES(
+'<Ratings>
+<BelowAverage>1</BelowAverage>
+<Average>2</Average>
+<Good>3</Good>
+<VeryGood>4</VeryGood>
+<Excellent>5</Excellent>
+</Ratings>'
+);
 
 
 
