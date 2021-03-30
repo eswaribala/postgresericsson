@@ -51,6 +51,9 @@ create table Customer(Customer_Id bigserial primary key, Customer_info jsonb not
 create table GlobalCountryInfo(CountryCode smallint primary key,
 Country_State text [] []);
 
+insert into GlobalCountryInfo (CountryCode,Country_State) values(91,'{{"India","TamilNadu"},{"India","Karnataka"}}');
+
+
 create table StarRating(Rating xml);
 
 INSERT INTO StarRating (Rating) VALUES(
