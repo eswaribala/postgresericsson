@@ -1,0 +1,19 @@
+create database accountdb;
+create database inventorydb;
+create database shippingdb;
+=================================================================
+/c inventorydb
+
+Inventory db
+
+tables
+Product,Location,Stock, Product type
+
+Create Type ProductType As Enum('Electronics','Garments','Furniture', 'Kitchen Appliances');
+
+
+Create table Product(Product_Id bigserial,
+
+
+
+
