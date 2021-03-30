@@ -18,5 +18,14 @@ Buffer_level smallint constraint buffer_level_constr Check(Buffer_level>0), Prod
 Create table Location(Regional_Code smallint primary key , Address text not null, Contact_Number bigint);
 
 
+to list the tables
+\dt
+
+to list the realtions for specific table
+\dt+ location
+
+to desribe the table
+
+\d product
 
 
