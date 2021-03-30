@@ -28,4 +28,4 @@ to desribe the table
 
 \d product
 
-
+create sequence invoice_no_seq AS bigint;
