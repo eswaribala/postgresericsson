@@ -54,7 +54,14 @@ now());
 
 create table DeliverySchedule(Schedule_Id bigserial primary key, Product_Id bigint, Requested_Delivery_Date date, Planned_Delivery_Date date, Available_Qty bigint);
 
+
 insert into DeliverySchedule (Product_Id,Requested_Delivery_Date,Planned_Delivery_Date, Available_Qty) values(1,'2021-04-10','2021-04-12',100);
+
+select age( Planned_Delivery_Date,Requested_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
+
+select age( Planned_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
+
+select MONTHS_BETWEEN(Planned_Delivery_Date,Requested_Delivery_Date) from DeliverySchedule where Schedule_Id=1; 
 
 
 \accountdb
@@ -70,7 +77,7 @@ Status Boolean);
 
 insert into ProductTransaction (Transaction_Date_Time,Amount,Mode,Status) values (now(),10000,'Cash',true);
 
-
+SELECT date_part('hour', Transaction_Date_Time) from ProductTransaction where Transaction_Id=1;
 
 
 create table Customer(Customer_Id bigserial primary key, Customer_info jsonb not null);
@@ -100,15 +107,35 @@ insert into Customer (Customer_info) values ('{
   }');
 
 
+SELECT Customer_info  -> 'email',Customer_info -> 'address' AS Email
+FROM Customer
+WHERE Customer_Id=1;
+
+SELECT Customer_info  -> 'email',Customer_info -> 'address' AS Email
+FROM Customer
+WHERE Customer_Id=1;
+
+
+SELECT Customer_info  -> 'email',Customer_info -> 'address' ->> 'Geo' FROM Customer
+WHERE Customer_Id=1;
+
+SELECT Customer_info  -> 'username',Customer_info -> 'address' ->> 'city' FROM Customer
+WHERE Customer_Id=1;
+
+
+update Customer set Customer_info=replace(Customer_Info::TEXT,':"Sincere@april.biz"',':"Param@gmail.com"')::jsonb
 
 
 
 create table GlobalCountryInfo(CountryCode smallint primary key,
 Country_State text [] []);
 
-
-
 insert into GlobalCountryInfo (CountryCode,Country_State) values(91,'{{"India","TamilNadu"},{"India","Karnataka"}}');
+
+select Country_State[:][2:2] from GlobalCountryInfo;
+
+update GlobalCountryInfo set Country_State[1:1][1:2]='{"India","Kerala"}' where CountryCode=91;
+
 
 
 create table StarRating(Rating xml);
@@ -123,17 +150,7 @@ INSERT INTO StarRating (Rating) VALUES(
 </Ratings>'
 );
 
-select age( Planned_Delivery_Date,Requested_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
-
-select age( Planned_Delivery_Date) from DeliverySchedule where Schedule_Id=1;
-
-SELECT date_part('hour', Transaction_Date_Time) from ProductTransaction where Transaction_Id=1;
 
 
-SELECT Customer_info  -> 'email',Customer_info -> 'address' AS Email
-FROM Customer
-WHERE Customer_Id=1;
-
-update Customer set Customer_info=replace(Customer_Info::TEXT,':"Sincere@april.biz"',':"Param@gmail.com"')::jsonb
 
 
