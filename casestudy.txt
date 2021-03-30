@@ -33,6 +33,7 @@ Create table Stock(Invoice_No bigint NOT NULL DEFAULT nextval('invoice_no_seq') 
 
 create table StockStatusHistory(History_Id bigserial primary key,  Product_Id bigint, Qty bigint, Stock_SnapShot timestamptz);
 
+
 create table DeliverySchedule(Schedule_Id bigserial primary key, Product_Id bigint, Requested_Delivery_Date date, Planned_Delivery_Date date, Available_Qty bigint);
 
 
@@ -43,4 +44,16 @@ create table ProductTransaction(Transaction_Id bigserial primary key,
 Transaction_Date_Time timestamptz, Amount bigint, Mode varchar(50), 
 
 Status Boolean);
+
+
+create table Customer(Customer_Id bigserial primary key, Customer_info jsonb not null);
+
+create table GlobalCountryInfo(CountryCode smallint primary key,
+Country_State text [] []);
+
+create table StarRating(Rating xml);
+
+
+
+
 
