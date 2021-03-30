@@ -44,7 +44,9 @@ create table ProductTransaction(Transaction_Id bigserial primary key,
 Transaction_Date_Time timestamptz, Amount bigint, Mode varchar(50), 
 
 Status Boolean);
+SET TIMEZONE = 'Asia/Calcutta';
 
+insert into ProductTransaction (Transaction_Date_Time,Amount,Mode,Status) values (now(),10000,'Cash',true);
 
 create table Customer(Customer_Id bigserial primary key, Customer_info jsonb not null);
 
