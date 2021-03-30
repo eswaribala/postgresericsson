@@ -31,3 +31,5 @@ to desribe the table
 create sequence invoice_no_seq AS bigint;
 Create table Stock(Invoice_No bigint NOT NULL DEFAULT nextval('invoice_no_seq') primary key, DOP date, Qty smallint, Cost bigint, Product_Id bigint references product(Product_Id), Regional_Code smallint references location(Regional_code));
 
+create table StockStatusHistory(History_Id bigserial primary key,  Product_Id bigint, Qty bigint, Stock_SnapShot timestamptz);
+
