@@ -33,3 +33,5 @@ Create table Stock(Invoice_No bigint NOT NULL DEFAULT nextval('invoice_no_seq') 
 
 create table StockStatusHistory(History_Id bigserial primary key,  Product_Id bigint, Qty bigint, Stock_SnapShot timestamptz);
 
+create table DeliverySchedule(Schedule_Id bigserial primary key, Product_Id bigint, Requested_Delivery_Date date, Planned_Delivery_Date date, Available_Qty bigint);
+
