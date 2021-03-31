@@ -123,7 +123,7 @@ SELECT Customer_info  -> 'username',Customer_info -> 'address' ->> 'city' FROM C
 WHERE Customer_Id=1;
 
 
-update Customer set Customer_info=replace(Customer_Info::TEXT,':"Sincere@april.biz"',':"Param@gmail.com"')::jsonb
+UPDATE Customer SET Customer_info = jsonb_set(Customer_Info, '{email}', '"param@gmail.com"');
 
 
 
