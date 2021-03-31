@@ -168,4 +168,13 @@ CREATE TABLE address
 , address_struct  ADDRESS_TYPE );
 
 insert into address (address_struct) values(ROW('Rajaji st','Chennai','TN','600049'));
+\c inventorydb
+
+stock, product,location
+qty,cost,product_name,address
+
+select product.product_name, stock.qty,stock.cost  from stock inner join product on stock.product_id=product.product_id;
+
+
+select p.product_name,l.address,s.qty,s.cost  from stock s inner join product p on s.product_id=p.product_id inner join location l on s.regional_code=l.regional_code;
 
