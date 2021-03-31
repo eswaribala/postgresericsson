@@ -152,5 +152,5 @@ INSERT INTO StarRating (Rating) VALUES(
 
 pg_dump.exe -U admin -d accountdb -f d:/backup/accountdb_backup.sql
 
-
+psql.exe -U enterprisedb -d accountdb2021 -f d:/backup/accountdb_backup.sql
 
