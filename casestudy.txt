@@ -154,3 +154,5 @@ pg_dump.exe -U admin -d accountdb -f d:/backup/accountdb_backup.sql
 
 psql.exe -U enterprisedb -d accountdb2021 -f d:/backup/accountdb_backup.sql
 
+Create table Profile(Profile_Id serial primary key,Photo oid);
+insert into Profile (Photo) values (lo_import('d:/pictures/butterfly.jpg'));
