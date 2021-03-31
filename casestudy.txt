@@ -250,3 +250,16 @@ CREATE TABLE employee_rp PARTITION OF employee FOR VALUES IN ('Resource Pool');
 CREATE TABLE employee_sl PARTITION OF employee FOR VALUES IN ('SL');
 
 CREATE TABLE employee_left PARTITION OF employee FOR VALUES IN ('Left');
+
+
+
+Multi level partition
+CREATE TABLE order (Order_Id bigserial, status TEXT, amount NUMERIC) PARTITION BY LIST(status);
+CREATE TABLE order_active PARTITION OF order FOR VALUES IN ('ACTIVE','RECURRING','COMPLETED') PARTITION BY RANGE(amount);
+CREATE TABLE order_amount_small PARTITION OF order_active FOR VALUES FROM (MINVALUE) TO (1000) PARTITION BY HASH(Order_Id);
+CREATE TABLE order_part11 PARTITION OF order_amount_small FOR VALUES WITH (modulus 2, remainder 0);
+CREATE TABLE order_part11 PARTITION OF order_amount_small FOR VALUES WITH (modulus 2, remainder 1);
+CREATE TABLE order_other PARTITION OF order DEFAULT PARTITION BY RANGE(amount);
+CREATE TABLE order_amount_large PARTITION OF order_other FOR VALUES FROM (1001) TO (MAXVALUE) PARTITION BY HASH(Order_Id);
+CREATE TABLE order_part21 PARTITION OF order_amount_large FOR VALUES WITH (modulus 2, remainder 0);
+CREATE TABLE order_part22 PARTITION OF order_amount_large FOR VALUES WITH (modulus 2, remainder 1);
