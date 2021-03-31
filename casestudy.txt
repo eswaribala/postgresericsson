@@ -237,4 +237,16 @@ select * from pg_locks;
 SELECT * FROM pg_stat_user_tables WHERE schemaname = 'public' AND relname = 'product’;
 
     
-    
+    partition
+
+
+Create Type StatusType As Enum('Project','Resource Pool','SL', 'Left');
+
+create table employee (Employee_No serial, Name varchar(100), Status StatusType) PARTITION BY LIST(Status);
+CREATE TABLE employee_project PARTITION OF employee FOR VALUES IN ('Project');
+
+CREATE TABLE employee_rp PARTITION OF employee FOR VALUES IN ('Resource Pool');
+
+CREATE TABLE employee_sl PARTITION OF employee FOR VALUES IN ('SL');
+
+CREATE TABLE employee_left PARTITION OF employee FOR VALUES IN ('Left');
