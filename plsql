@@ -278,3 +278,34 @@ begin
 end; $$
 ======================================================================================
 
+create table customer(id bigserial primary key,
+name varchar(100));
+
+create table customer_audit(audit_id bigserial, customer_id bigint, name varchar(100), dot date); 
+
+
+CREATE OR REPLACE FUNCTION log_name_changes()
+  RETURNS TRIGGER 
+  LANGUAGE PLPGSQL
+  AS
+$$
+BEGIN
+	IF NEW.name <> OLD.name THEN
+		 INSERT INTO customer_audit(customer_id,name,dot)
+		 VALUES(OLD.id,OLD.name,now());
+	END IF;
+
+	RETURN NEW;
+END;
+$$
+CREATE TRIGGER customer_update_trigger
+
+  AFTER UPDATE
+
+  ON "customer"
+
+  FOR EACH ROW
+
+  EXECUTE PROCEDURE log_name_changes();
+====================================================================================================
+
