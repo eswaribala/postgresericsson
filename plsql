@@ -155,3 +155,18 @@ begin
 	 end if;
 end; $$
 =====================================================================================
+create function get_acc_payment_by_staff(p_staff_id int)
+returns int
+language plpgsql
+as
+$$
+declare
+   v_total_amount integer;
+begin
+   SELECT sum(amount) into v_total_amount
+	FROM public.payment group by staff_id having staff_id=p_staff_id;
+   
+   return v_total_amount;
+end;
+$$;
+===============================================================================
