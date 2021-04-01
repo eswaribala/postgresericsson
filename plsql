@@ -170,3 +170,14 @@ begin
 end;
 $$;
 ===============================================================================
+
+create or replace function staff_customer_count(
+	inout id int
+) 
+language plpgsql	
+as $$
+begin
+   select count(customer_id) into id from rental group by staff_id having staff_id=id;
+end; $$;
+
+=============================================================================
