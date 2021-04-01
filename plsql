@@ -308,4 +308,32 @@ CREATE TRIGGER customer_update_trigger
 
   EXECUTE PROCEDURE log_name_changes();
 ====================================================================================================
+CREATE TABLE testing_partition(patent_id BIGINT, date DATE) WITH ( OIDS=FALSE);
+CREATE OR REPLACE FUNCTION create_partition_and_insert() RETURNS trigger AS
+  $BODY$
+    DECLARE
+      partition_date TEXT;
+      partition TEXT;
+    BEGIN
+      partition_date := to_char(NEW.date,'YYYY_MM_DD');
+      partition := TG_RELNAME || '_' || partition_date;
+      IF NOT EXISTS(SELECT relname FROM pg_class WHERE relname=partition) THEN
+        RAISE NOTICE 'A partition has been created %',partition;
+        EXECUTE 'CREATE TABLE ' || partition || ' (check (date = ''' || NEW.date || ''')) INHERITS (' || TG_RELNAME || ');';
+      END IF;
+      EXECUTE 'INSERT INTO ' || partition || ' SELECT(' || TG_RELNAME || ' ' || quote_literal(NEW) || ').* RETURNING patent_id;';
+      RETURN NULL;
+    END;
+  $BODY$
+
+CREATE TRIGGER testing_partition_insert_trigger
+BEFORE INSERT ON testing_partition
+FOR EACH ROW EXECUTE PROCEDURE create_partition_and_insert();
+
+=> insert into testing_partition values (12312, '2011-01-11');
+NOTICE:  A partition has been created testing_partition_2011_01_11
+INSERT 0 0
+=>
+=> insert into testing_partition values (1, '2011-01-11');
+INSERT 0 0
 
