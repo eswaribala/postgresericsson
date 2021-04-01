@@ -131,3 +131,27 @@ begin
     end if;
 end; $$
 ================================================================================================
+do $$ 
+declare
+    total_payment numeric; 
+    service_level varchar(25) ;
+begin
+     select sum(cost) into total_payment
+     from stock
+     where invoice_no = 1; 
+	 
+	 if found then
+	    case 
+		   when total_payment > 200 then
+               service_level = 'Platinum' ;
+           when total_payment > 100 then
+	           service_level = 'Gold' ;
+           else
+               service_level = 'Silver' ;
+        end case;
+		raise notice 'Service Level: %', service_level;
+     else
+	    raise notice 'Customer not found';
+	 end if;
+end; $$
+=====================================================================================
