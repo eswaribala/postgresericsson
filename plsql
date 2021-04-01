@@ -104,3 +104,30 @@ begin
   end if;
 end $$
 ============================================================================================================================
+
+do $$
+declare 
+	price   stock.cost%type;
+	price_segment varchar(50);
+begin
+    -- get the rental rate
+    select cost into price
+    from stock
+    where invoice_no = 1;
+	
+	-- assign the price segment
+	if found then
+		case price
+		   when 45000 then
+              price_segment =  'Mass';
+		   when 300000 then
+              price_segment = 'Mainstream';
+		   when 2000000 then
+              price_segment = 'High End';
+		   else
+	    	  price_segment = 'Unspecified';
+		   end case;
+		raise notice '%', price_segment;  
+    end if;
+end; $$
+================================================================================================
