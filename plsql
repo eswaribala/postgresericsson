@@ -250,7 +250,7 @@ create or replace function get_film_titles(p_year integer,p_lang_id integer)
 declare 
 	 titles text default '';
 	 rec_film   record;
-	 cur_films cursor(p_year integer,p_lang_id) 
+	 cur_films cursor(p_year integer,p_lang_id integer) 
 		 for select title, release_year
 		 from film
 		 where release_year = p_year and language_id=p_lang_id;
